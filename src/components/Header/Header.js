@@ -10,6 +10,7 @@ const Header = () => {
         Intuitive Quiz Hub
       </Link>
       <hr className="divider" />
+      
     </div>
   );
 };
