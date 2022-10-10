@@ -2,20 +2,16 @@ import { Button, MenuItem, TextField } from '@mui/material';
 import React, { useState } from 'react'
 import "./Home.css";
 import Categories from "../../Data/Categories";
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 
-const Home = ( name, setName, fetchQuestions) => {
-
-
-
-  const [category, setCategory]= useState("");
-  const [difficulty, setDifficulty]= useState("");
+const Home = ({ name, setName, fetchQuestions }) => {
+  const [category, setCategory] = useState("");
+  const [difficulty, setDifficulty] = useState("");
   const [error, setError] = useState(false);
 
   const navigate = useNavigate();
-
 
   const handleSubmit = () => {
     if (!category || !difficulty || !name) {
@@ -23,54 +19,69 @@ const Home = ( name, setName, fetchQuestions) => {
       return;
     } else {
       setError(false);
-      fetchQuestions(category, difficulty);
+      console.log(category, difficulty);
       navigate("/quiz");
     }
   };
 
-
-
-
   return (
-    <div className='content'>
-        <div className='settings'>
-          <span style={{fontSize: 30}}>Quiz Settings</span>
-
-
-          <div className='fields'>
-
+    <div className="content">
+      <div className="settings">
+        <span style={{ fontSize: 30 }}>Quiz Settings</span>
+        <div className="fields">
           {error && <ErrorMessage>Please Fill all the feilds</ErrorMessage>}
-
-            <TextField label="Enter Your Name" variant="outlined" style={{ marginBottom: 25 }} onChange={(e) => setName(e.target.value)}/>
-
-            <TextField select label="Select Category" variant="outlined" style={{ marginBottom: 30 }} value={category} onChange={(e) => setCategory(e.target.value)}>
-              {
-                Categories.map((cat) =>(
-                  <MenuItem key={cat.category} value={cat.value}>
-                    {cat.category}
-                  </MenuItem>
-                ))
-              }
-            </TextField>
-
-            <TextField select label="Select Difficulty" variant="outlined" style={{ marginBottom: 30 }} value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
-              <MenuItem key="Easy" value="easy"> Easy </MenuItem>
-              <MenuItem key="Medium" value="medium"> Medium </MenuItem>
-              <MenuItem key="Hard" value="hard"> Hard </MenuItem>
-            </TextField>
-
-            <Button variant="contained" color="primary" size="large" onClick={handleSubmit}> Start Quiz </Button>
-          </div>
-
-
-
+          <TextField
+            style={{ marginBottom: 25 }}
+            label="Enter Your Name"
+            value={name ?? ""}
+            variant="outlined"
+            onChange={(e) => setName(e.target.value)}
+          />
+          <TextField
+            select
+            label="Select Category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            variant="outlined"
+            style={{ marginBottom: 30 }}
+          >
+            {Categories.map((cat) => (
+              <MenuItem key={cat.category} value={cat.value}>
+                {cat.category}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            select
+            label="Select Difficulty"
+            value={difficulty}
+            onChange={(e) => setDifficulty(e.target.value)}
+            variant="outlined"
+            style={{ marginBottom: 30 }}
+          >
+            <MenuItem key="Easy" value="easy">
+              Easy
+            </MenuItem>
+            <MenuItem key="Medium" value="medium">
+              Medium
+            </MenuItem>
+            <MenuItem key="Hard" value="hard">
+              Hard
+            </MenuItem>
+          </TextField>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={handleSubmit}
+          >
+            Start Quiz
+          </Button>
         </div>
-
-        <img src="/quiz.svg" alt="quiz img" className='banner'/>
+      </div>
+      <img src="/quiz.svg" className="banner" alt="quiz app" />
     </div>
-    
-    
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
