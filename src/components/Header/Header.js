@@ -6,7 +6,7 @@ import "./Header.css";
 const Header = () => {
   return (
     <div className="header">
-      <Link to="/" className="title">
+      <Link to="/home" className="title">
         Intuitive Quiz Hub
       </Link>
       <hr className="divider" />
